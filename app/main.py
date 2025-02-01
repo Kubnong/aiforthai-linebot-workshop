@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Request, Response
 from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+
 import app.service as service 
 
 app = FastAPI(
@@ -18,6 +20,8 @@ app.add_middleware(
     allow_headers=["*"]
 )
 app.include_router(service.router)
+
+app.mount("/static/",StaticFiles(directory="static"),name="static")
 
 @app.get('/')
 def index():
